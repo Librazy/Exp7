@@ -19,12 +19,9 @@ public:
 	double evaluate(double x) const; //计算多项式的值
 	bool operator==(const Polynomial&) const;
 	bool operator!=(const Polynomial&) const;
-	Polynomial operator+(const Polynomial&) const &&;
-	Polynomial operator-(const Polynomial&) const &&;
-	Polynomial operator*(const Polynomial&) const &&;
-	Polynomial operator+(const Polynomial&) const &;
-	Polynomial operator-(const Polynomial&) const &;
-	Polynomial operator*(const Polynomial&) const &;
+	Polynomial operator+(const Polynomial&) const ;
+	Polynomial operator-(const Polynomial&) const ;
+	Polynomial operator*(const Polynomial&) const ;
 
 	Polynomial& operator+=(const Polynomial&) &;
 	Polynomial& operator-=(const Polynomial&) &;

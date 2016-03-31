@@ -108,40 +108,21 @@ Polynomial& Polynomial::operator=(const Polynomial&& p)
 	poly = std::move(p.poly);
 	return *this;
 }
-Polynomial Polynomial::operator*(const Polynomial& p) const &
+Polynomial Polynomial::operator*(const Polynomial& p) const 
 {
 	std::cout << "operator*" << std::endl;
 	Polynomial q(*this);
 	return q *= p;
 }
-Polynomial Polynomial::operator+(const Polynomial& p) const &
+Polynomial Polynomial::operator+(const Polynomial& p) const 
 {
 	std::cout << "operator+" << std::endl;
 	Polynomial q(*this);
 	return q += p;
 }
-Polynomial Polynomial::operator-(const Polynomial& p) const &
+Polynomial Polynomial::operator-(const Polynomial& p) const 
 {
 	std::cout << "operator-" << std::endl;
-	Polynomial q(*this);
-	return q -= p;
-}
-Polynomial Polynomial::operator*(const Polynomial& p) const &&
-{
-	std::cout << "operator*&&" << std::endl;
-	Polynomial q(*this);
-	return q *= p;
-}
-Polynomial Polynomial::operator+(const Polynomial& p) const &&
-{
-	std::cout << "operator+&&" << std::endl;
-	//Polynomial q(std::forward<Polynomial>( * const_cast<Polynomial*>(this) ));
-	Polynomial q(*this);
-	return q += p;
-}
-Polynomial Polynomial::operator-(const Polynomial& p) const &&
-{
-	std::cout << "operator-&&" << std::endl;
 	Polynomial q(*this);
 	return q -= p;
 }
@@ -263,6 +244,9 @@ int main()
 	std::cout << (p *= q) << std::endl;
 	std::cout << (p -= q) << std::endl;
 	std::cout << p*q - q * r + r << std::endl;
+	std::cout << p.evaluate(10) << std::endl;
+	std::cout << p.evaluate(10) << std::endl;
+	p = q*r;
 	std::cout << p.evaluate(10) << std::endl;
 	return 0;
 }
