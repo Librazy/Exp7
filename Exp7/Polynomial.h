@@ -24,9 +24,9 @@ public:
 	Polynomial operator+(const Polynomial&) const &;
 	Polynomial operator-(const Polynomial&) const &;
 	Polynomial operator*(const Polynomial&) const &;
-	Polynomial&& operator+(const Polynomial&) && ;
-	Polynomial&& operator-(const Polynomial&) && ;
-	Polynomial&& operator*(const Polynomial&) && ;
+	Polynomial operator+(const Polynomial&) && ;
+	Polynomial operator-(const Polynomial&) && ;
+	Polynomial operator*(const Polynomial&) && ;
 	Polynomial& operator+=(const Polynomial&) &;
 	Polynomial& operator-=(const Polynomial&) &;
 	Polynomial& operator*=(const Polynomial&) &;

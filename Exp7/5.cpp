@@ -127,20 +127,20 @@ Polynomial Polynomial::operator-(const Polynomial& p) const &
 	Polynomial q(*this);
 	return std::move(q -= p);
 }
-Polynomial&& Polynomial::operator*(const Polynomial& p) &&
+Polynomial Polynomial::operator*(const Polynomial& p) &&
 {
 	std::clog << "operator*&&" << id << " " << p.id << std::endl;
-	return std::move(*this *= p);
+	return *this *= p;
 }
-Polynomial&& Polynomial::operator+(const Polynomial& p) &&
+Polynomial Polynomial::operator+(const Polynomial& p) &&
 {
 	std::clog << "operator+&&" << id << " " << p.id << std::endl;
-	return std::move(*this += p);
+	return *this += p;
 }
-Polynomial&& Polynomial::operator-(const Polynomial& p) &&
+Polynomial Polynomial::operator-(const Polynomial& p) &&
 {
 	std::clog << "operator-&&" << id << " " << p.id << std::endl;
-	return std::move(*this -= p);
+	return *this -= p;
 }
 bool Polynomial::operator==(const Polynomial& p) const
 {
@@ -246,7 +246,6 @@ double Polynomial::evaluate(double x) const
 	}
 	return val;
 }
-
 int main()
 {
 	Polynomial p, q, r;
@@ -257,7 +256,7 @@ int main()
 	std::cout << p * q << std::endl;
 	std::cout << (p *= q) << std::endl;
 	std::cout << (p -= q) << std::endl;
-	std::cout << p*q - q * r + r << std::endl;
+	std::cout << p*q - q * r * r + r << std::endl;
 	std::cout << p.evaluate(10) << std::endl;
 	std::cout << p.evaluate(10) << std::endl;
 	p = q*r;
