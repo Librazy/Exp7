@@ -3,49 +3,50 @@
 #include <string>
 #include <iostream>
 #include <sstream>
-
-Polynomial::Polynomial()
+int Polynomial::idn;
+Polynomial::Polynomial() :id(idn++)
 {
-	std::cout << "Polynomial()" << std::endl;
+	std::clog << "Polynomial()" << id << std::endl;
 	poly.clear();
 }
-Polynomial::Polynomial(double coefs[], int exps[], int size)
+Polynomial::Polynomial(double coefs[], int exps[], int size) : id(idn++)
 {
-	std::cout << "Polynomial(double coefs[], int exps[], int size)" << std::endl;
+	std::clog << "Polynomial(double coefs[], int exps[], int size)" << id << std::endl;
 	poly.clear();
 	for (int i = 0; i != size; ++i) {
-		poly.push_back(nomial(coefs[i],exps[i]));
+		poly.push_back(nomial(coefs[i], exps[i]));
 	}
 	ord();
 }
-Polynomial::Polynomial(std::vector<double> c, std::vector<int> e)
+Polynomial::Polynomial(std::vector<double> c, std::vector<int> e) :id(idn++)
 {
-	std::cout << "Polynomial(std::vector<double> c, std::vector<int> e)" << std::endl;
+	std::clog << "Polynomial(std::vector<double> c, std::vector<int> e)" << id << std::endl;
 	poly.clear();
 	for (int i = 0; i != std::size(c) && i != std::size(e); ++i) {
 		poly.push_back(nomial(c[i], e[i]));
 	}
 	ord();
 }
-Polynomial::Polynomial(const Polynomial& p)
+Polynomial::Polynomial(const Polynomial& p) :id(idn++)
 {
-	std::cout << "Polynomial(const Polynomial& p)" << std::endl;
+	std::clog << "Polynomial(const Polynomial& p)" << id << "<<" << p.id << std::endl;
 	poly = p.poly;
 }
-Polynomial::Polynomial(const Polynomial&& p)
+Polynomial::Polynomial(const Polynomial&& p) : id(p.id)
 {
-	std::cout << "Polynomial(const Polynomial&& p)" << std::endl;
-	*this = std::move(p);
+	std::clog << "Polynomial(const Polynomial&& p)" << p.id << std::endl;
+	poly = std::move(p.poly);
 }
 Polynomial::~Polynomial()
 {
-	std::cout << "~Polynomial()" << std::endl;
+	std::clog << "~Polynomial()" << id << std::endl;
+	id = -111;
 	poly.clear();
 }
 
 void Polynomial::ord()
 {
-	std::cout << "ord" << std::endl;
+	std::clog << "ord" << std::endl;
 
 	std::sort(poly.begin(), poly.end(), [](nomial a, nomial b)->bool {return a.second < b.second; });
 	terms p;
@@ -63,8 +64,8 @@ void Polynomial::ord()
 	}p.push_back(cur);
 	poly = p;
 }
-std::istream& operator>> (std::istream& in, Polynomial& t) {
-	std::cout << "operator>>" << std::endl;
+std::istream& operator >> (std::istream& in, Polynomial& t) {
+	std::clog << "operator>>" << std::endl;
 	std::string l1, l2;
 	std::getline(in, l1);
 	std::getline(in, l2);
@@ -73,65 +74,81 @@ std::istream& operator>> (std::istream& in, Polynomial& t) {
 	double c; int e;
 	std::vector<double>cv;
 	std::vector<int>ev;
-	while(s1>>c&&s2>>e) {
+	while (s1 >> c&&s2 >> e) {
 		cv.push_back(c);
 		ev.push_back(e);
 	}
-	t = Polynomial(cv, ev);
+	t.poly.clear();
+	for (int i = 0; i != std::size(cv) && i != std::size(ev); ++i) {
+		t.poly.push_back(nomial(cv[i], ev[i]));
+	}
+	t.ord();
 	return in;
 }
+
 std::ostream& operator << (std::ostream& out, const Polynomial& t) {
-	std::cout << "operator<<&" << std::endl;
-	out << t + Polynomial();
-	return out;
-}
-std::ostream& operator << (std::ostream& out, Polynomial&& t) {
-	std::cout << "operator<<&&" << std::endl;
-	for(auto i:t.poly) {
-		if(i==t.poly.front()) {
+	std::clog << "operator<<&&" << std::endl;
+	for (auto i : t.poly) {
+		if (i == t.poly.front()) {
 			out << i.first << "^" << i.second;
-		}else {
-			out <<" + "<< i.first << "^" << i.second;
+		}
+		else {
+			out << " + " << i.first << "^" << i.second;
 		}
 	}
 	return out;
 }
-Polynomial& Polynomial::operator=(const Polynomial& p )
+Polynomial& Polynomial::operator=(const Polynomial& p)
 {
-	std::cout << "operator=&" << std::endl;
+	std::clog << "operator=&" << std::endl;
 	poly = p.poly;
 	return *this;
 }
 Polynomial& Polynomial::operator=(const Polynomial&& p)
 {
-	std::cout << "operator=&&" << std::endl;
+	std::clog << "operator=&&" << std::endl;
 	poly = std::move(p.poly);
 	return *this;
 }
-Polynomial Polynomial::operator*(const Polynomial& p) const 
+Polynomial Polynomial::operator*(const Polynomial& p) const &
 {
-	std::cout << "operator*" << std::endl;
+	std::clog << "operator*" << id << " " << p.id << std::endl;
 	Polynomial q(*this);
 	return q *= p;
 }
-Polynomial Polynomial::operator+(const Polynomial& p) const 
+Polynomial Polynomial::operator+(const Polynomial& p) const &
 {
-	std::cout << "operator+" << std::endl;
+	std::clog << "operator+" << id << " " << p.id << std::endl;
 	Polynomial q(*this);
 	return q += p;
 }
-Polynomial Polynomial::operator-(const Polynomial& p) const 
+Polynomial Polynomial::operator-(const Polynomial& p) const &
 {
-	std::cout << "operator-" << std::endl;
+	std::clog << "operator-" << id << " " << p.id << std::endl;
 	Polynomial q(*this);
 	return q -= p;
 }
+Polynomial&& Polynomial::operator*(const Polynomial& p) &&
+{
+	std::clog << "operator*&&" << id << " " << p.id << std::endl;
+	return std::move(*this *= p);
+}
+Polynomial&& Polynomial::operator+(const Polynomial& p) &&
+{
+	std::clog << "operator+&&" << id << " " << p.id << std::endl;
+	return std::move(*this += p);
+}
+Polynomial&& Polynomial::operator-(const Polynomial& p) &&
+{
+	std::clog << "operator-&&" << id << " " << p.id << std::endl;
+	return std::move(*this -= p);
+}
 bool Polynomial::operator==(const Polynomial& p) const
 {
-	std::cout << "operator==" << std::endl;
+	std::clog << "operator==" << id << " " << p.id << std::endl;
 	if (std::size(p.poly) != std::size(poly)) { return false; }
 	for (auto i = poly.begin(), j = p.poly.begin(); i != poly.cend() && j != p.poly.cend();) {
-		if(i!=j) {
+		if (i != j) {
 			return false;
 		}
 	}
@@ -139,13 +156,13 @@ bool Polynomial::operator==(const Polynomial& p) const
 }
 bool Polynomial::operator!=(const Polynomial& p) const
 {
-	std::cout << "operator!=" << std::endl;
+	std::clog << "operator!=" << id << " " << p.id << std::endl;
 	return !(*this == p);
 }
 
 Polynomial& Polynomial::operator+=(const Polynomial&p) &
 {
-	std::cout << "operator+=" << std::endl;
+	std::clog << "operator+=&" << id << " " << p.id << std::endl;
 	terms rst;
 	auto i = poly.begin();
 	auto j = p.poly.begin();
@@ -177,7 +194,7 @@ Polynomial& Polynomial::operator+=(const Polynomial&p) &
 }
 Polynomial& Polynomial::operator-=(const Polynomial&p) &
 {
-	std::cout << "operator-=" << std::endl;
+	std::clog << "operator-=&" << id << " " << p.id << std::endl;
 	terms rst;
 	auto i = poly.begin();
 	auto j = p.poly.begin();
@@ -206,11 +223,10 @@ Polynomial& Polynomial::operator-=(const Polynomial&p) &
 	this->poly = std::move(rst);
 	ord();
 	return *this;
-
 }
 Polynomial& Polynomial::operator*=(const Polynomial&p) &
 {
-	std::cout << "operator*=" << std::endl;
+	std::clog << "operator*=&" << id << " " << p.id << std::endl;
 	terms rst;
 	for (auto i : poly) for (auto j : p.poly) {
 		rst.push_back(nomial(i.first*j.first, i.second + j.second));
@@ -226,7 +242,7 @@ int Polynomial::degree() const
 double Polynomial::evaluate(double x) const
 {
 	double val = 0;
-	for (auto i:poly) {
+	for (auto i : poly) {
 		val += pow(i.first, i.second);
 	}
 	return val;
@@ -234,9 +250,8 @@ double Polynomial::evaluate(double x) const
 
 int main()
 {
-
-	Polynomial p,q,r;
-	std::cin >> p >> q>> r;
+	Polynomial p, q, r;
+	std::cin >> p >> q >> r;
 	std::cout << p << std::endl;
 	std::cout << p + q << std::endl;
 	std::cout << p - q << std::endl;
@@ -250,4 +265,3 @@ int main()
 	std::cout << p.evaluate(10) << std::endl;
 	return 0;
 }
-

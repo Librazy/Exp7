@@ -3,6 +3,8 @@ typedef std::pair<double, int> nomial;
 typedef std::vector<nomial> terms;
 class Polynomial
 {
+	static int idn;
+	int id;
 	terms poly;
 	void ord();
 	Polynomial(std::vector<double>, std::vector<int>);
@@ -19,13 +21,15 @@ public:
 	double evaluate(double x) const; //计算多项式的值
 	bool operator==(const Polynomial&) const;
 	bool operator!=(const Polynomial&) const;
-	Polynomial operator+(const Polynomial&) const ;
-	Polynomial operator-(const Polynomial&) const ;
-	Polynomial operator*(const Polynomial&) const ;
-
+	Polynomial operator+(const Polynomial&) const &;
+	Polynomial operator-(const Polynomial&) const &;
+	Polynomial operator*(const Polynomial&) const &;
+	Polynomial&& operator+(const Polynomial&) && ;
+	Polynomial&& operator-(const Polynomial&) && ;
+	Polynomial&& operator*(const Polynomial&) && ;
 	Polynomial& operator+=(const Polynomial&) &;
 	Polynomial& operator-=(const Polynomial&) &;
 	Polynomial& operator*=(const Polynomial&) &;
 	friend std::istream& operator >> (std::istream& in, Polynomial& t);
-	friend std::ostream& operator << (std::ostream& out, Polynomial&& t);
+	friend std::ostream& operator << (std::ostream& out, const Polynomial& t);
 };
