@@ -14,7 +14,7 @@ Polynomial::Polynomial(double coefs[], int exps[], int size) : id(idn++)
 	std::clog << "Polynomial(double coefs[], int exps[], int size)" << id << std::endl;
 	poly.clear();
 	for (int i = 0; i != size; ++i) {
-		poly.push_back(nomial(coefs[i], exps[i]));
+		poly.emplace_back(nomial(coefs[i], exps[i]));
 	}
 	ord();
 }
@@ -23,7 +23,7 @@ Polynomial::Polynomial(std::vector<double> c, std::vector<int> e) :id(idn++)
 	std::clog << "Polynomial(std::vector<double> c, std::vector<int> e)" << id << std::endl;
 	poly.clear();
 	for (int i = 0; i != std::size(c) && i != std::size(e); ++i) {
-		poly.push_back(nomial(c[i], e[i]));
+		poly.emplace_back(nomial(c[i], e[i]));
 	}
 	ord();
 }
@@ -40,7 +40,6 @@ Polynomial::Polynomial(const Polynomial&& p) : id(p.id)
 Polynomial::~Polynomial()
 {
 	std::clog << "~Polynomial()" << id << std::endl;
-	id = -111;
 	poly.clear();
 }
 
@@ -62,7 +61,7 @@ void Polynomial::ord()
 			cur.second = i.second;
 		}
 	}p.push_back(cur);
-	poly = p;
+	poly = std::move(p);
 }
 std::istream& operator >> (std::istream& in, Polynomial& t) {
 	std::clog << "operator>>" << std::endl;
@@ -75,12 +74,12 @@ std::istream& operator >> (std::istream& in, Polynomial& t) {
 	std::vector<double>cv;
 	std::vector<int>ev;
 	while (s1 >> c&&s2 >> e) {
-		cv.push_back(c);
-		ev.push_back(e);
+		cv.emplace_back(c);
+		ev.emplace_back(e);
 	}
 	t.poly.clear();
 	for (int i = 0; i != std::size(cv) && i != std::size(ev); ++i) {
-		t.poly.push_back(nomial(cv[i], ev[i]));
+		t.poly.emplace_back(nomial(cv[i], ev[i]));
 	}
 	t.ord();
 	return in;
@@ -168,24 +167,24 @@ Polynomial& Polynomial::operator+=(const Polynomial&p) &
 	auto j = p.poly.begin();
 	for (; i != poly.cend() && j != p.poly.cend();) {
 		if (i->second < j->second) {
-			rst.push_back(nomial(i->first, i->second));
+			rst.emplace_back(nomial(i->first, i->second));
 			++i;
 		}
 		else if (i->second > j->second) {
-			rst.push_back(nomial(j->first, j->second));
+			rst.emplace_back(nomial(j->first, j->second));
 			++j;
 		}
 		else {
-			rst.push_back(nomial(i->first + j->first, i->second));
+			rst.emplace_back(nomial(i->first + j->first, i->second));
 			++i; ++j;
 		}
 	}
 	for (; i != poly.cend();) {
-		rst.push_back(nomial(i->first, i->second));
+		rst.emplace_back(nomial(i->first, i->second));
 		++i;
 	}
 	for (; j != p.poly.cend();) {
-		rst.push_back(nomial(j->first, j->second));
+		rst.emplace_back(nomial(j->first, j->second));
 		++j;
 	}
 	poly = std::move(rst);
@@ -200,24 +199,24 @@ Polynomial& Polynomial::operator-=(const Polynomial&p) &
 	auto j = p.poly.begin();
 	for (; i != poly.cend() && j != p.poly.cend();) {
 		if (i->second < j->second) {
-			rst.push_back(nomial(i->first, i->second));
+			rst.emplace_back(nomial(i->first, i->second));
 			++i;
 		}
 		else if (i->second > j->second) {
-			rst.push_back(nomial(-j->first, j->second));
+			rst.emplace_back(nomial(-j->first, j->second));
 			++j;
 		}
 		else {
-			rst.push_back(nomial(i->first - j->first, i->second));
+			rst.emplace_back(nomial(i->first - j->first, i->second));
 			++i; ++j;
 		}
 	}
 	for (; i != poly.cend();) {
-		rst.push_back(nomial(i->first, i->second));
+		rst.emplace_back(nomial(i->first, i->second));
 		++i;
 	}
 	for (; j != p.poly.cend();) {
-		rst.push_back(nomial(j->first, j->second));
+		rst.emplace_back(nomial(j->first, j->second));
 		++j;
 	}
 	this->poly = std::move(rst);
@@ -229,7 +228,7 @@ Polynomial& Polynomial::operator*=(const Polynomial&p) &
 	std::clog << "operator*=&" << id << " " << p.id << std::endl;
 	terms rst;
 	for (auto i : poly) for (auto j : p.poly) {
-		rst.push_back(nomial(i.first*j.first, i.second + j.second));
+		rst.emplace_back(nomial(i.first*j.first, i.second + j.second));
 	}
 	poly = std::move(rst);
 	ord();

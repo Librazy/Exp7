@@ -23,6 +23,7 @@
     <ClCompile Include="4.cpp" />
     <ClCompile Include="Polynomial.h" />
     <ClCompile Include="5.cpp" />
+    <ClCompile Include="11.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{95A7E8C5-B726-4228-B32B-45835FC0446C}</ProjectGuid>
