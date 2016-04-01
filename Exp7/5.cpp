@@ -32,7 +32,7 @@ Polynomial::Polynomial(const Polynomial& p) :id(idn++)
 	std::clog << "Polynomial(const Polynomial& p)" << id << "<<" << p.id << std::endl;
 	poly = p.poly;
 }
-Polynomial::Polynomial(const Polynomial&& p) : id(p.id)
+Polynomial::Polynomial(const Polynomial&& p) : id(p.id*100)
 {
 	std::clog << "Polynomial(const Polynomial&& p)" << p.id << std::endl;
 	poly = std::move(p.poly);
@@ -64,7 +64,7 @@ void Polynomial::ord()
 	poly = std::move(p);
 }
 std::istream& operator >> (std::istream& in, Polynomial& t) {
-	std::clog << "operator>>" << std::endl;
+	std::clog << "operator>>" << t.id << std::endl;
 	std::string l1, l2;
 	std::getline(in, l1);
 	std::getline(in, l2);
@@ -86,7 +86,7 @@ std::istream& operator >> (std::istream& in, Polynomial& t) {
 }
 
 std::ostream& operator << (std::ostream& out, const Polynomial& t) {
-	std::clog << "operator<<&&" << std::endl;
+	std::clog << "operator<<&&" <<t.id<< std::endl;
 	for (auto i : t.poly) {
 		if (i == t.poly.front()) {
 			out << i.first << "^" << i.second;
@@ -99,13 +99,13 @@ std::ostream& operator << (std::ostream& out, const Polynomial& t) {
 }
 Polynomial& Polynomial::operator=(const Polynomial& p)
 {
-	std::clog << "operator=&" << std::endl;
+	std::clog << "operator=&" << p.id << std::endl;
 	poly = p.poly;
 	return *this;
 }
 Polynomial& Polynomial::operator=(const Polynomial&& p)
 {
-	std::clog << "operator=&&" << std::endl;
+	std::clog << "operator=&&" << p.id << std::endl;
 	poly = std::move(p.poly);
 	return *this;
 }
@@ -113,19 +113,19 @@ Polynomial Polynomial::operator*(const Polynomial& p) const &
 {
 	std::clog << "operator*" << id << " " << p.id << std::endl;
 	Polynomial q(*this);
-	return q *= p;
+	return std::move(q *= p);
 }
 Polynomial Polynomial::operator+(const Polynomial& p) const &
 {
 	std::clog << "operator+" << id << " " << p.id << std::endl;
 	Polynomial q(*this);
-	return q += p;
+	return std::move(q+= p);
 }
 Polynomial Polynomial::operator-(const Polynomial& p) const &
 {
 	std::clog << "operator-" << id << " " << p.id << std::endl;
 	Polynomial q(*this);
-	return q -= p;
+	return std::move(q -= p);
 }
 Polynomial&& Polynomial::operator*(const Polynomial& p) &&
 {
