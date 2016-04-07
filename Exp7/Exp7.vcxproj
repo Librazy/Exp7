@@ -19,11 +19,25 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="3.cpp" />
+    <ClCompile Include="14.cpp" />
+    <ClCompile Include="15.cpp" />
+    <ClCompile Include="16.cpp" />
+    <ClCompile Include="17.cpp" />
+    <ClCompile Include="3.12.cpp" />
     <ClCompile Include="4.cpp" />
+    <ClCompile Include="main.cpp" />
     <ClCompile Include="Polynomial.h" />
     <ClCompile Include="5.cpp" />
     <ClCompile Include="11.cpp" />
+    <ClCompile Include="13.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Date.h" />
+    <ClInclude Include="IntSet.h" />
+    <ClInclude Include="LinearList.h" />
+    <ClInclude Include="Singleton.h" />
+    <ClInclude Include="String.h" />
+    <ClInclude Include="Time.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{95A7E8C5-B726-4228-B32B-45835FC0446C}</ProjectGuid>
