@@ -11,7 +11,6 @@ public:
 	Point relative(const Point& p)const; //计算相对于p的相对坐标
 	bool is_above_left(const Point& p)const; //判断是否在点p的左上方
 };
-
 double Point::r() const
 {
 	return x*x + y*y;
