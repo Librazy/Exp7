@@ -1,6 +1,5 @@
 #include "LinearList.h"
 
-
 bool LinearList::insert(int x, int pos)
 {
 	if(pos<0||pos>intv.size()) {
