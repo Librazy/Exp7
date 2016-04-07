@@ -42,7 +42,6 @@ Polynomial::~Polynomial()
 	//std::clog << "~Polynomial()" << id << std::endl;
 	poly.clear();
 }
-
 void Polynomial::ord()
 {
 	//std::clog << "ord" << std::endl;
