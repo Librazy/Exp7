@@ -1,5 +1,6 @@
 #include "Singleton.h"
 
+
 std::once_flag Singleton::instance_created;
 std::shared_ptr<Singleton> Singleton::instance;
 std::shared_ptr<Singleton> Singleton::get_instance()
