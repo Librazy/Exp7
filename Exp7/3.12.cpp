@@ -1,5 +1,6 @@
 #include "Time.h"
 
+
 int Time::dayTotal() const
 {
 	return secondFromZero / 86400;
