@@ -29,6 +29,10 @@ int main()
 		assert(i.insert(1, 0)&&"LinearList test failed");
 		assert(i.insert(2, 0)&&"LinearList test failed");
 		assert(i.insert(5, 0)&&"LinearList test failed");
+		int x;
+		assert(i.remove(x, 1)&&"LinearList test failed");
+		assert(x == 2 && "LinearList test failed");
+		assert(i.insert(2, 1) && "LinearList test failed");
 		assert(i.element(2) == 1&&"LinearList test failed");
 		assert(i.length() == 3&&"LinearList test failed");
 		assert(i.search(5) == 0&&"LinearList test failed");
@@ -64,10 +68,10 @@ int main()
 	{
 		Polynomial p1,p2;
 		std::string s1 = 
-R"(1 2 4 6 7
-1 2 3 4 6
-1 1
-0 1
+"qwe(1 2 4 6 7\"\
+1 2 3 4 6\
+1 1\
+0 1\
 )";
 		std::stringstream ss1(s1),ss2;
 		double ds[5]= { 1,2,4,6,7 };

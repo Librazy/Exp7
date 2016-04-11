@@ -19,17 +19,17 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="14.cpp" />
-    <ClCompile Include="15.cpp" />
-    <ClCompile Include="16.cpp" />
-    <ClCompile Include="17.cpp" />
-    <ClCompile Include="3.12.cpp" />
-    <ClCompile Include="4.cpp" />
+    <ClCompile Include="String.cpp" />
+    <ClCompile Include="IntSet.cpp" />
+    <ClCompile Include="LinearList.cpp" />
+    <ClCompile Include="Singleton.cpp" />
+    <ClCompile Include="Time.cpp" />
+    <ClCompile Include="Complex.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Polynomial.h" />
-    <ClCompile Include="5.cpp" />
-    <ClCompile Include="11.cpp" />
-    <ClCompile Include="13.cpp" />
+    <ClCompile Include="Polynomial.cpp" />
+    <ClCompile Include="Point.cpp" />
+    <ClCompile Include="Date.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Date.h" />

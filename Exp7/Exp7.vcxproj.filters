@@ -15,37 +15,37 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="4.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
     <ClCompile Include="Polynomial.h">
       <Filter>头文件</Filter>
     </ClCompile>
-    <ClCompile Include="5.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="11.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="3.12.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="13.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="14.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="15.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="16.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="17.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
     <ClCompile Include="main.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Singleton.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="LinearList.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="IntSet.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="String.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Date.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Point.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Polynomial.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Complex.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Time.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>

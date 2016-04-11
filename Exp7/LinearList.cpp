@@ -21,7 +21,7 @@ bool LinearList::remove(int &x, int pos)
 	auto i = intv.begin()+pos;
 	x = *i;
 	intv.erase(i);
-	return false;
+	return true;
 }
 
 int LinearList::element(int pos) const
