@@ -9,6 +9,12 @@
 #include <cassert>
 #include <string>
 #include <sstream>
+#include "DateWithTime.h"
+#include "ExtTime.h"
+#include "Stack.h"
+#include "Point.h"
+#define _USE_MATH_DEFINES
+#include <math.h>
 
 int main()
 {
@@ -68,21 +74,22 @@ int main()
 	{
 		Polynomial p1,p2;
 		std::string s1 = 
-"qwe(1 2 4 6 7\"\
-1 2 3 4 6\
-1 1\
-0 1\
-)";
-		std::stringstream ss1(s1),ss2;
+R"qwe(1 2 4 6 7
+1 2 3 4 6
+1 1
+0 1
+)qwe";
+		std::stringstream ss1(s1);
+		std::stringstream ss2;
 		double ds[5]= { 1,2,4,6,7 };
 		int is[5]= { 1,2,3,4,6 };
 		Polynomial p(ds, is, 5);
 		ss1 >> p1 >> p2;
 		assert(p1 == p&&"Polynominal test failed");
 		ss1.clear();
-		
 		ss2 << p2*p2 << std::endl;
-		assert(ss2.str()=="1^0 + 2^1 + 1^2\n"&&"Polynominal test failed");
+		auto i = ss2.str();
+		assert(i =="1^0 + 2^1 + 1^2\n"&&"Polynominal test failed");
 	}
 	//+End Polynominal
 	//+IntSet
@@ -112,5 +119,44 @@ int main()
 		assert(s2 == String("eeeeert") && "String test failed");
 	}
 	//+End String
+
+	//+Start DateWithTime
+	{
+		DateWithTime t1(2016, 4, 16, 0, 0, 1);
+		DateWithTime t2(2016, 4, 17, 0, 0, 0);
+		assert(t2 - t1 == 86399 && "DateWithTime test failed");
+		assert(t2 > t1 && "DateWithTime test failed");
+	}
+	//+End DateWithTime
+	//+Start ExtTime
+	{
+		ExtTime t1(0,1,0,0);
+		ExtTime t2(0,0,0,5);
+		assert(t1 - t2 == 3600*5+60 && "ExtTime test failed");
+		t1.set(0, 2, 0, 0);
+		assert(t1 - t2 == 3600*5+60*2 && "ExtTime test failed");
+	}
+	//+End ExtTime
+	//+Start Stack
+	{
+		Stack s;
+		assert(s.push(1) && "Stack test failed");
+		assert(s.push(2) && "Stack test failed");
+		assert(s.push(4) && "Stack test failed");
+		assert(s.pop() == 4 && "Stack test failed");
+		assert(s.pop() == 2 && "Stack test failed");
+		assert(s.pop() == 1 && "Stack test failed");
+	}
+	//+End Stack
+
+	//+Start Point
+	{
+		Point x(1,2);
+		Circle c(1, 2, 3);
+		Rectangle r(2, 3, 3, 5, 0);
+		assert(c.area() == 3 * 3 * M_PI && "Point test failed");
+		assert(r.area() == 3 * 5 && "Point test failed");
+	}
+	//+End Point
 	return 0;
 }

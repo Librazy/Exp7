@@ -48,6 +48,15 @@
     <ClCompile Include="Time.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="Num.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="ExtTime.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Stack.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Singleton.h">
@@ -66,6 +75,21 @@
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="Time.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Num.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="DateWithTime.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="ExtTime.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Stack.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Point.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>

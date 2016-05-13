@@ -19,6 +19,9 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="ExtTime.cpp" />
+    <ClCompile Include="Num.cpp" />
+    <ClCompile Include="Stack.cpp" />
     <ClCompile Include="String.cpp" />
     <ClCompile Include="IntSet.cpp" />
     <ClCompile Include="LinearList.cpp" />
@@ -33,9 +36,14 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Date.h" />
+    <ClInclude Include="DateWithTime.h" />
+    <ClInclude Include="ExtTime.h" />
     <ClInclude Include="IntSet.h" />
     <ClInclude Include="LinearList.h" />
+    <ClInclude Include="Num.h" />
+    <ClInclude Include="Point.h" />
     <ClInclude Include="Singleton.h" />
+    <ClInclude Include="Stack.h" />
     <ClInclude Include="String.h" />
     <ClInclude Include="Time.h" />
   </ItemGroup>
