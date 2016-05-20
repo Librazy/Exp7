@@ -15,6 +15,7 @@
 #include "Point.h"
 #define _USE_MATH_DEFINES
 #include <math.h>
+#include "Templates.h"
 
 int main()
 {
@@ -126,6 +127,7 @@ R"qwe(1 2 4 6 7
 		DateWithTime t2(2016, 4, 17, 0, 0, 0);
 		assert(t2 - t1 == 86399 && "DateWithTime test failed");
 		assert(t2 > t1 && "DateWithTime test failed");
+		t1 = t1 + 10;
 	}
 	//+End DateWithTime
 	//+Start ExtTime
@@ -158,5 +160,93 @@ R"qwe(1 2 4 6 7
 		assert(r.area() == 3 * 5 && "Point test failed");
 	}
 	//+End Point
+	//+Start Sort
+	{
+		int i[] = { 0,4,2,3,5,8,6,7,9,1 };
+		double j[] = { 0,1,2,4,3,6,5,9,8,7 };
+		int sorted_i[] = { 0,1,2,3,4,5,6,7,8,9 };
+		double sorted_d[] = { 0,1,2,3,4,5,6,7,8,9 };
+		template_sort(i, 10);
+		template_sort(j, 10);
+		assert(std::equal(i, i + 10, sorted_i));
+		assert(std::equal(j, j + 10, sorted_d));
+	}
+	//+End Sort
+
+	//+Start Template_queue
+	{
+		template_queue<int> q;
+		q.push(1);
+		q.push(2);
+		q.push(3);
+		q.push(4);
+		q.push(5);
+		assert(q.pop() == 1);
+		assert(q.pop() == 2);
+		assert(q.pop() == 3);
+		assert(q.pop() == 4);
+		q.push(6);
+		q.push(7);
+		q.push(8);
+		assert(q.pop() == 5);
+		assert(q.pop() == 6);
+		q.push(9);
+		assert(q.pop() == 7);
+		assert(q.pop() == 8);
+		assert(q.pop() == 9);
+	}
+	//+End Template_queue
+
+	//+Start Template_min
+	{
+		double a = 3, b = 4;
+		assert(3 == template_min(a, b));
+		int e = 5, f = 7;
+		assert(5 == template_min(e, f));
+	}
+	//+End Template_min
+
+	//+Start Template_Array
+	{
+		template_Array<int> arr(5);
+		arr[0] = 10;
+		arr[2] = 10;
+		arr[1] = 5;
+		arr[3] = -1;
+		assert(!arr.has(3));
+		assert(arr.has(5));
+		arr.sum();
+	}
+	//+End Template_Array
+
+	//+Start Template_Sorted_LinkedList
+	{
+		template_Sorted_LinkedList<double> list;
+		list.insert(1.1);
+		list.insert(3.3);
+		list.insert(1.2);
+		list.insert(1.0);
+		assert(1.1 == list.at(1));
+		assert(1.0 == list.at(0));
+		assert(3.3 == list.at(3));
+		list.remove(2);
+		assert(3.3 == list.at(2));
+		auto list2(list);
+		auto list3 = list2;
+		assert(3.3 == list2.at(2));
+		list3.insert(2);
+		assert(3.3 == list3.at(3));
+	}
+	//+End Template_Sorted_LinkedList
+
+	//+Start QuickSort
+	{
+		std::vector<int> vec = { 1,435,456,7,34,6,432,65,312,54,6,324 };
+		auto vec2(vec);
+		template_sort<int>(vec.begin(), vec.end());
+		std::sort(vec2.begin(), vec2.end());
+		assert(vec == vec2);
+	}
+
 	return 0;
 }

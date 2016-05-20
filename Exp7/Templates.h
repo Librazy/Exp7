@@ -1,0 +1,196 @@
+#pragma once
+template<typename T>
+void template_sort(T arr[], size_t num)
+{
+	size_t cur;
+	for(size_t i=0;i<num;++i) {
+		cur = i;
+		for (size_t j = i; j < num; ++j) {
+			if(arr[j] < arr[cur]) {
+				cur = j;
+			}
+		}
+		std::swap(arr[i], arr[cur]);
+	}
+}
+template<typename T>
+class template_queue
+{
+public:
+	T pop();
+	void push(T);
+	template_queue();
+private:
+	T* arr;
+	size_t b,e,cap;
+};
+template<typename T>
+template_queue<T>::template_queue() :b(0), e(0)
+{
+	cap = 4;
+	arr = new T[cap];
+}
+template<typename T>
+T template_queue<T>::pop()
+{
+	assert(e - b > 0);
+	return arr[b++];
+}
+template<typename T>
+void template_queue<T>::push(T a)
+{
+	if (e == cap) {
+		T* newarr = new T[cap * 2];
+		for (size_t i = b; i != e; ++i) {
+			std::swap(newarr[i - b], arr[i]);
+		}
+		arr = newarr;
+		e = e - b;
+		b = 0;
+	}
+	arr[e++] = a;
+}
+template<typename T>
+T template_min(T a, T b)
+{
+	return (a < b) ? a : b;
+}
+template<typename T>
+class template_Array
+{
+	T* data;
+	size_t size;
+public:
+	template_Array(size_t size):data(new T[size]), size(size)
+	{
+		assert(size > 0);
+	}
+
+	T& operator[](size_t index)
+	{
+		index %= size;
+		return data[index];
+	}
+
+	bool has(const T& obj)
+	{
+		for (size_t i = 0; i != size; ++i){
+			if (obj == data[i])return true;
+		}
+		return false;
+	}
+
+	auto sum()->decltype(std::declval<T>() + std::declval<T>())
+	{
+		if (size == 1)return data[0];
+		auto res = data[0] + data[1];
+		for (size_t i = 2; i != size; ++i) {
+			res = res + data[i];
+		}
+		return res;
+	}
+};
+template<typename T>
+class template_Sorted_LinkedList
+{
+public:
+	struct Node
+	{
+		T data;
+		Node* next = nullptr;
+	};
+private:
+	Node head;
+	void dispose()
+	{
+		Node* cur = &head;
+		Node* nxt;
+		if (cur->next) {
+			cur = cur->next;
+			do {
+				nxt = cur->next;
+				delete cur;
+				cur = nxt;
+			} while (nxt);
+		}
+	}
+public:
+	template_Sorted_LinkedList(){}
+	template_Sorted_LinkedList(const template_Sorted_LinkedList& x)
+	{
+		Node* cur = &head;
+		Node const* xur = &(x.head);
+
+		while (xur->next) {
+			cur->next = new Node;
+			cur->next->data = xur->next->data;
+			xur = xur->next;
+			cur = cur->next;
+		}
+	}
+	~template_Sorted_LinkedList()
+	{
+		dispose();
+	}
+	template_Sorted_LinkedList& operator=(const template_Sorted_LinkedList& x)
+	{
+		dispose();
+		Node* cur = &head;
+		Node* xur = &(x.head);
+
+		while (xur->next) {
+			cur->next = new Node;
+			cur->next->data = xur->data;
+			xur = xur->next;
+			cur = cur->next;
+		}
+		return *this;
+	}
+	void insert(const T& t)
+	{
+		Node* cur=&head;
+		while(cur->next) {
+			if(t < cur->next->data) {
+				Node* nxt = cur->next;
+				cur->next = new Node;
+				cur->next->data = t;
+				cur->next->next = nxt;
+				return;
+			}
+			cur = cur->next;
+		}
+		cur->next = new Node;
+		cur->next->data = t;
+	}
+	T& at(size_t x)
+	{
+		Node* cur = &head;
+		for(size_t i=0;i!=x;++i) {
+			if (!cur->next)throw std::out_of_range("");
+			cur = cur->next;
+		}
+		return cur->next->data;
+	}
+	void remove(size_t x)
+	{
+		Node* cur = &head;
+		for (size_t i = 0; i != x ; ++i) {
+			if (!cur->next)throw std::out_of_range("");
+			cur = cur->next;
+		}
+		cur->next = cur->next->next;
+	}
+};
+template<typename T>
+void template_sort(typename std::vector<T>::iterator it1, typename std::vector<T>::iterator it2)
+{
+	if (it2 - it1 <= 1)return;
+	if (it2 - it1 > 1)
+	{
+		auto its = it2 - 1;
+		auto it = partition(it1, its, [its](int a) {return (a < *its); });
+		std::swap(*it, *its);
+		template_sort<T>(it1, it);
+		template_sort<T>(it + 1, it2);
+	}
+}

@@ -92,5 +92,8 @@
     <ClInclude Include="Point.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="Templates.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
