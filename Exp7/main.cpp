@@ -326,7 +326,7 @@ R"qwe(1 2 4 6 7
 			, std::minus<int>())
 		);
 		auto res5 = std::for_each(i.begin(), i.end(), funtor_filtered_fold(filter_test(), 0));
-		auto res6 = std::for_each(j.begin(), j.end(), funtor_filtered_fold(val_test(10),val_test(0)
+		auto res6 = std::for_each(j.begin(), j.end(), funtor_filtered_fold(val_test(10), val_test(0)
 			, [](val_test& a, val_test& b) {return a.i < b.i; }
 		));
 		auto res7 = std::for_each(j.begin(), j.end(), funtor_filtered_fold(filter_test(), val_test(0)
@@ -334,7 +334,7 @@ R"qwe(1 2 4 6 7
 		));
 
 
-		auto res8 = std::for_each(i.begin(), i.end(), funtor_filtered_fold(10, unary_filter_test()));
+		auto res8 = std::for_each(i.begin(), i.end(), funtor_filtered_fold(10, unary_filter_test(10)));
 
 		assert(res0.val == 43 + 35 + 67);
 		assert(res1.val == 43 + 35 + 67 - 10);

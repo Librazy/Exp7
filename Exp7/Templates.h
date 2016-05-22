@@ -210,7 +210,9 @@ struct filter_test
 
 struct unary_filter_test
 {
-	bool operator()(const int i) const { return i > 10; }
+	int val;
+	unary_filter_test(int val):val(val){}
+	bool operator()(const int i) const { return i > val; }
 };
 
 
