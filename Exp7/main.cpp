@@ -308,8 +308,8 @@ R"qwe(1 2 4 6 7
 		std::vector<int> i{ 1,4,7,9,10,43,35,67 };
 		val_test js[]={ 1,4,7,9,10,43,35,67 };
 		std::vector<val_test> j{ 
-			std::make_move_iterator(std::begin(j)),
-			std::make_move_iterator(std::end(j)) 
+			std::make_move_iterator(std::begin(js)),
+			std::make_move_iterator(std::end(js)) 
 		};
 
 		auto res0 = std::for_each(i.begin(), i.end(), funtor_filtered_fold(10));
@@ -334,7 +334,7 @@ R"qwe(1 2 4 6 7
 		));
 
 
-		auto res8 = std::for_each(i.begin(), i.end(), funtor_filtered_fold(10, unary_filter_test(10)));
+		auto res8 = std::for_each(i.begin(), i.end(), funtor_filtered_fold(10, unary_predicate_test(10)));
 
 		assert(res0.val == 43 + 35 + 67);
 		assert(res1.val == 43 + 35 + 67 - 10);
@@ -372,7 +372,7 @@ R"qwe(1 2 4 6 7
 		std::string str= "AlphaBet";
 		std::string res;
 		std::locale loc("English_United States.1251");
-		std::transform(str.cbegin(), str.cend(),std::back_inserter(res), [&loc](char i)
+		std::transform(str.cbegin(), str.cend(),std::back_inserter(res), [&loc](int i)
 		{
 			if (std::isupper(i, loc)) {
 				i += 13;
