@@ -343,6 +343,8 @@ R"qwe(1 2 4 6 7
 		assert(res4.val == -(43 + 35 + 67 + 10));
 		assert(res5.val == 1 + 4 + 7 + 9);
 		assert(res6.val.i == 43 + 35 + 67);
+		assert(res7.val.i == 43 + 35 + 67);
+		assert(res8.val == 10 + 43 + 35 + 67 );
 
 	}
 	//++End filtered_sum
