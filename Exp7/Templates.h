@@ -1,6 +1,7 @@
 #pragma once
+#include <type_traits>
 template<typename T>
-void template_sort(T arr[], size_t num)
+void template_select_sort(T arr[], size_t num)
 {
 	size_t cur;
 	for(size_t i=0;i<num;++i) {
@@ -182,7 +183,7 @@ public:
 	}
 };
 template<typename T>
-void template_sort(typename std::vector<T>::iterator it1, typename std::vector<T>::iterator it2)
+void template_quick_sort(typename std::vector<T>::iterator it1, typename std::vector<T>::iterator it2)
 {
 	if (it2 - it1 <= 1)return;
 	if (it2 - it1 > 1)
@@ -190,7 +191,37 @@ void template_sort(typename std::vector<T>::iterator it1, typename std::vector<T
 		auto its = it2 - 1;
 		auto it = partition(it1, its, [its](int a) {return (a < *its); });
 		std::swap(*it, *its);
-		template_sort<T>(it1, it);
-		template_sort<T>(it + 1, it2);
+		template_quick_sort<T>(it1, it);
+		template_quick_sort<T>(it + 1, it2);
 	}
+}
+
+template<typename filter_T,typename T ,typename BinaryPredicate , typename BinaryOperation
+	,typename = std::enable_if_t<std::is_same<bool,std::result_of_t<BinaryPredicate(filter_T,T)> >::value>
+	>
+struct funtor_filtered_fold_impl
+{
+	T val;
+	filter_T filter;
+	BinaryPredicate pred;
+	BinaryOperation op;
+	funtor_filtered_fold_impl(filter_T filter ,T&& inV = T(), BinaryPredicate pred = std::less<T>(), BinaryOperation op = std::plus<T>()) :
+		val(inV), filter(filter),pred(pred),op(op) {}
+	T operator()(T& a){
+		if(std::invoke(pred,filter,a)) {
+			val = std::invoke(op, val, a);
+		}
+		return val;
+	}
+};
+
+template<typename filter_T, typename T = filter_T, typename BinaryPredicate = std::less<T>, typename BinaryOperation = std::plus<T>>
+auto funtor_filtered_fold(filter_T filter, T&& inV = T(), BinaryPredicate pred = std::less<T>(), BinaryOperation op = std::plus<T>())
+{
+	return funtor_filtered_fold_impl<filter_T, T, decltype(pred), decltype(op) >(
+		std::forward<filter_T>(filter),
+		std::forward<T>(inV),
+		std::forward<BinaryPredicate>(pred),
+		std::forward<BinaryOperation>(op)
+		);
 }

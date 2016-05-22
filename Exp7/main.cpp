@@ -1,4 +1,5 @@
 #include <memory>
+#include <iostream>
 #include "Singleton.h"
 #include "Date.h"
 #include "IntSet.h"
@@ -9,6 +10,7 @@
 #include <cassert>
 #include <string>
 #include <sstream>
+
 #include "DateWithTime.h"
 #include "ExtTime.h"
 #include "Stack.h"
@@ -16,10 +18,14 @@
 #define _USE_MATH_DEFINES
 #include <math.h>
 #include "Templates.h"
+#include "Student.h"
+#include <map>
+#include <locale>
+#include <iterator>
 
 int main()
 {
-	//+Singlethon
+	//++Singlethon
 	{
 		auto i = Singleton::get_instance();
 		auto j = Singleton::get_instance();
@@ -29,8 +35,8 @@ int main()
 		j->res++;
 		assert(i->res == 10 && j->res == 10 && k->res == 10 && "Singleton test failed");
 	}
-	//+End Singlethon
-	//+LinearList
+	//++End Singlethon
+	//++LinearList
 	{
 		LinearList i;
 		assert(i.insert(1, 0)&&"LinearList test failed");
@@ -44,8 +50,8 @@ int main()
 		assert(i.length() == 3&&"LinearList test failed");
 		assert(i.search(5) == 0&&"LinearList test failed");
 	}
-	//+End LinearList
-	//+Date
+	//++End LinearList
+	//++Date
 	{
 		std::stringstream ss;
 		Date i(1999, 12, 31);
@@ -56,8 +62,8 @@ int main()
 		ss << j << std::endl;
 		assert(ss.str() == "2000 1 1\n2000 2 29\n" && "Date test failed");
 	}
-	//+End Date
-	//+Time
+	//++End Date
+	//++Time
 	{
 		Time t1(1,2,3);
 		Time t2(2,2,3);
@@ -70,8 +76,8 @@ int main()
 		t += 10;
 		assert(t == Time(0,0,10) && "Time test failed");
 	}
-	//+End Time
-	//+Polynominal
+	//++End Time
+	//++Polynominal
 	{
 		Polynomial p1,p2;
 		std::string s1 = 
@@ -92,8 +98,8 @@ R"qwe(1 2 4 6 7
 		auto i = ss2.str();
 		assert(i =="1^0 + 2^1 + 1^2\n"&&"Polynominal test failed");
 	}
-	//+End Polynominal
-	//+IntSet
+	//++End Polynominal
+	//++IntSet
 	{
 		IntSet s1, s2;
 		s1.insert(1).insert(6).insert(7).insert(9).insert(2);
@@ -105,8 +111,8 @@ R"qwe(1 2 4 6 7
 		assert(s3.size() == 6 && s4.size() == 8 && "IntSet test failed");
 		assert(s3.union2(s1.intersection2(s2)).is_equal(s1.union2(s2)) && "IntSet test failed");
 	}
-	//+End IntSet
-	//+String
+	//++End IntSet
+	//++String
 	{
 		String s1("qwertyqwe1 6 9"),s2("qwert");
 		assert(s1.is_substring(s2) && "String test failed");
@@ -119,9 +125,9 @@ R"qwe(1 2 4 6 7
 		assert(s1 == String("eeertyeee169") && "String test failed");
 		assert(s2 == String("eeeeert") && "String test failed");
 	}
-	//+End String
+	//++End String
 
-	//+Start DateWithTime
+	//++Start DateWithTime
 	{
 		DateWithTime t1(2016, 4, 16, 0, 0, 1);
 		DateWithTime t2(2016, 4, 17, 0, 0, 0);
@@ -129,8 +135,8 @@ R"qwe(1 2 4 6 7
 		assert(t2 > t1 && "DateWithTime test failed");
 		t1 = t1 + 10;
 	}
-	//+End DateWithTime
-	//+Start ExtTime
+	//++End DateWithTime
+	//++Start ExtTime
 	{
 		ExtTime t1(0,1,0,0);
 		ExtTime t2(0,0,0,5);
@@ -138,8 +144,8 @@ R"qwe(1 2 4 6 7
 		t1.set(0, 2, 0, 0);
 		assert(t1 - t2 == 3600*5+60*2 && "ExtTime test failed");
 	}
-	//+End ExtTime
-	//+Start Stack
+	//++End ExtTime
+	//++Start Stack
 	{
 		Stack s;
 		assert(s.push(1) && "Stack test failed");
@@ -149,9 +155,9 @@ R"qwe(1 2 4 6 7
 		assert(s.pop() == 2 && "Stack test failed");
 		assert(s.pop() == 1 && "Stack test failed");
 	}
-	//+End Stack
+	//++End Stack
 
-	//+Start Point
+	//++Start Point
 	{
 		Point x(1,2);
 		Circle c(1, 2, 3);
@@ -159,21 +165,22 @@ R"qwe(1 2 4 6 7
 		assert(c.area() == 3 * 3 * M_PI && "Point test failed");
 		assert(r.area() == 3 * 5 && "Point test failed");
 	}
-	//+End Point
-	//+Start Sort
+	//++End Point
+
+	//++Start Template_Select_Sort
 	{
 		int i[] = { 0,4,2,3,5,8,6,7,9,1 };
 		double j[] = { 0,1,2,4,3,6,5,9,8,7 };
 		int sorted_i[] = { 0,1,2,3,4,5,6,7,8,9 };
 		double sorted_d[] = { 0,1,2,3,4,5,6,7,8,9 };
-		template_sort(i, 10);
-		template_sort(j, 10);
+		template_select_sort(i, 10);
+		template_select_sort(j, 10);
 		assert(std::equal(i, i + 10, sorted_i));
 		assert(std::equal(j, j + 10, sorted_d));
 	}
-	//+End Sort
+	//++End Template_Select_Sort
 
-	//+Start Template_queue
+	//++Start Template_Queue
 	{
 		template_queue<int> q;
 		q.push(1);
@@ -195,18 +202,18 @@ R"qwe(1 2 4 6 7
 		assert(q.pop() == 8);
 		assert(q.pop() == 9);
 	}
-	//+End Template_queue
+	//++End Template_queue
 
-	//+Start Template_min
+	//++Start Template_min
 	{
 		double a = 3, b = 4;
 		assert(3 == template_min(a, b));
 		int e = 5, f = 7;
 		assert(5 == template_min(e, f));
 	}
-	//+End Template_min
+	//++End Template_min
 
-	//+Start Template_Array
+	//++Start Template_Array
 	{
 		template_Array<int> arr(5);
 		arr[0] = 10;
@@ -217,9 +224,9 @@ R"qwe(1 2 4 6 7
 		assert(arr.has(5));
 		arr.sum();
 	}
-	//+End Template_Array
+	//++End Template_Array
 
-	//+Start Template_Sorted_LinkedList
+	//++Start Template_Sorted_LinkedList
 	{
 		template_Sorted_LinkedList<double> list;
 		list.insert(1.1);
@@ -237,16 +244,127 @@ R"qwe(1 2 4 6 7
 		list3.insert(2);
 		assert(3.3 == list3.at(3));
 	}
-	//+End Template_Sorted_LinkedList
+	//++End Template_Sorted_LinkedList
 
-	//+Start QuickSort
+	//++Start Template_Quick_Sort
 	{
-		std::vector<int> vec = { 1,435,456,7,34,6,432,65,312,54,6,324 };
-		auto vec2(vec);
-		template_sort<int>(vec.begin(), vec.end());
-		std::sort(vec2.begin(), vec2.end());
-		assert(vec == vec2);
+		std::vector<int> i{ 0,4,2,3,5,8,6,7,9,1 };
+		std::vector<double> j{ 0,1,2,4,3,6,5,9,8,7 };
+		std::vector<int> sorted_i { 0,1,2,3,4,5,6,7,8,9 };
+		std::vector<double> sorted_d { 0,1,2,3,4,5,6,7,8,9 };
+		template_quick_sort<int>(i.begin(),i.end());
+		template_quick_sort<double>(j.begin(), j.end());
+		assert(i == sorted_i);
+		assert(j == sorted_d);
 	}
+	//++End Template_Quick_Sort
 
+	//++Start Student
+	{
+		std::vector<Student> students;
+		std::string s1 =
+			R"qwe(
+2757 A 99 99 99 99 99 99 99 98 
+2333 B 23 34 45 56 67 78 89 90
+2456 C 66 66 66 66 66 66 66 66
+2444 D 34 99 77 66 99 99 66 99
+)qwe";
+		std::string s2 =
+			R"qwe(2757 A 99 99 99 99 99 99 99 98 
+2444 D 34 99 77 66 99 99 66 99 
+2456 C 66 66 66 66 66 66 66 66 
+2333 B 23 34 45 56 67 78 89 90 
+)qwe";
+		std::stringstream ss1(s1);
+		std::stringstream ss2;
+	
+		for (Student i; ss1 >> i; students.push_back(i));
+		std::sort(students.begin(), students.end(), [](auto a, auto b) {return !(a < b); });
+		for(Student& i:students) {
+			ss2<< i << std::endl;
+		}
+		assert(ss2.str() == s2);
+	}
+	//++End Student
+
+	//++Start nametable
+	{
+		std::map<std::string, int> nametable;
+		nametable.insert(std::make_pair("A", 99));
+		nametable.insert(std::make_pair("C", 96));
+		nametable.insert(std::make_pair("B", 97));
+		nametable.insert(std::make_pair("D", 77));
+		std::string name="A";
+		auto res = std::find_if(nametable.begin(), nametable.end(), [name](const auto& i)
+		{
+			return i.first == name;
+		});
+		assert(res->second == 99);
+	}
+	//++End nametable
+
+	//++Start filtered_sum
+	{
+		std::vector<int> i{ 1,4,7,9,10,43,35,67 };
+		auto res0 = std::for_each(i.begin(), i.end(), funtor_filtered_fold(10));
+		auto res1 = std::for_each(i.begin(), i.end(), funtor_filtered_fold(10, -10));
+		auto res2 = std::for_each(i.begin(), i.end(), funtor_filtered_fold(10, 0
+			, std::equal_to<int>()));
+		auto res3 = std::for_each(i.begin(), i.end(), funtor_filtered_fold(10, 0
+			, std::equal_to<int>()
+			, std::minus<int>()));
+		auto res4 = std::for_each(i.begin(), i.end(), funtor_filtered_fold(10, 0
+			, [](auto a, auto b) {return a <= b; }
+			, std::minus<int>()));
+
+		assert(res0.val == 43 + 35 + 67);
+		assert(res1.val == 43 + 35 + 67 - 10);
+		assert(res2.val == 10);
+		assert(res3.val == -10);
+		assert(res4.val == -(43 + 35 + 67 + 10));
+
+	}
+	//++End filtered_sum
+
+	//++Start Reverse_Str
+	{
+		std::string str= "AlphaBet";
+		std::string res;
+		std::locale loc("English_United States.1251");
+		std::transform(str.cbegin(), str.cend(),std::back_inserter(res), [&loc](char i)
+		{
+			if (std::isupper(i, loc)) {
+				i = std::tolower(i, loc);
+			}
+			else if (std::islower(i, loc)) {
+				i = std::toupper(i, loc);
+			}
+			return i;
+		});
+		std::reverse(res.begin(), res.end());
+		assert(res == "TEbAHPLa");
+	}
+	//++End Reverse_Str
+
+	//++Start Rot13
+	{
+		std::string str= "AlphaBet";
+		std::string res;
+		std::locale loc("English_United States.1251");
+		std::transform(str.cbegin(), str.cend(),std::back_inserter(res), [&loc](char i)
+		{
+			if (std::isupper(i, loc)) {
+				i += 13;
+				if (i > 'Z')i -= 26;
+			}
+			else if (std::islower(i, loc)) {
+				i += 13;
+				if (i > 'z')i -= 26;
+			}
+			return static_cast<char>(i);
+		});
+		assert(res == "NycunOrg");
+	}
+	//++End Rot13
 	return 0;
 }
