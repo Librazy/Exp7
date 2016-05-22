@@ -333,6 +333,9 @@ R"qwe(1 2 4 6 7
 			, [](filter_test& a, val_test& b) {return 10 < b.i; }
 		));
 
+
+		auto res8 = std::for_each(i.begin(), i.end(), funtor_filtered_fold<nullptr_t>(10));
+
 		assert(res0.val == 43 + 35 + 67);
 		assert(res1.val == 43 + 35 + 67 - 10);
 		assert(res2.val == 10);

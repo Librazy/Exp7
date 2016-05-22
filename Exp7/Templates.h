@@ -229,24 +229,90 @@ struct val_test
 };
 
 template<typename filter_T,typename T ,typename BinaryPredicate , typename BinaryOperation
-	,typename = std::enable_if_t<std::is_same<bool,std::result_of_t<BinaryPredicate(filter_T,T)> >::value>
+	,typename = void
+	,typename = void
 	>
 struct funtor_filtered_fold_impl
+{
+
+	void operator()(T& a){
+
+	}
+};
+
+template<typename filter_T, typename T, typename BinaryPredicate, typename BinaryOperation>
+struct funtor_filtered_fold_impl<filter_T, T, BinaryPredicate, BinaryOperation
+	, std::enable_if_t<std::is_same<bool, std::result_of_t<BinaryPredicate(filter_T, T)> >::value>
+	, void
+>
 {
 	T& val;
 	filter_T& filter;
 	BinaryPredicate pred;
 	BinaryOperation op;
 	funtor_filtered_fold_impl(filter_T&& filter, T&& inV, BinaryPredicate pred, BinaryOperation op) :
-		val(inV), filter(filter),pred(pred),op(op) {}
-	void operator()(T& a){
-		if(std::invoke(pred,filter,a)) {
+		val(inV), filter(filter), pred(pred), op(op) {}
+	void operator()(T& a) {
+		if (std::invoke(pred, filter, a)) {
 			val = std::invoke(op, val, a);
 		}
 	}
 };
 
-template<typename filter_T, typename T = filter_T, typename BinaryPredicate = std::less<>, typename BinaryOperation = std::plus<>>
+template<typename filter_T, typename T, typename UnaryPredicate, typename BinaryOperation>
+struct funtor_filtered_fold_impl<filter_T, T, UnaryPredicate, BinaryOperation
+	, std::enable_if_t<std::is_same<bool, std::result_of_t<UnaryPredicate(T)> >::value>
+	, std::enable_if_t<std::is_same<std::nullptr_t, filter_T>::value >
+>
+{
+	T& val;
+	UnaryPredicate pred;
+	BinaryOperation op;
+	funtor_filtered_fold_impl(T&& inV, UnaryPredicate pred, BinaryOperation op) :
+		val(inV),  pred(pred), op(op) {}
+	void operator()(T& a) {
+		if (std::invoke(pred, a)) {
+			val = std::invoke(op, val, a);
+		}
+	}
+};
+
+
+
+template<typename N
+	, typename T
+	, typename UnaryPredicate = decltype(std::bind(
+		std::greater<>()
+		,std::placeholders::_1
+		,0
+		))
+	, typename BinaryOperation = std::plus<>
+	, typename = std::enable_if_t<std::is_same<bool, std::result_of_t<UnaryPredicate(T)> >::value>
+	, typename = std::enable_if_t<std::is_same<std::nullptr_t, N>::value >
+>
+auto funtor_filtered_fold(T&& inV
+	, UnaryPredicate pred = std::bind(
+		std::greater<>()
+		,std::placeholders::_1
+		,0
+		)
+	, BinaryOperation op = std::plus<>() )
+{
+	return funtor_filtered_fold_impl<nullptr_t, T, decltype(pred), decltype(op)>(
+		std::forward<T>(inV),
+		std::forward<UnaryPredicate>(pred),
+		std::forward<BinaryOperation>(op)
+		);
+}
+
+
+
+template<typename filter_T
+	, typename T = filter_T
+	, typename BinaryPredicate = std::less<>
+	, typename BinaryOperation = std::plus<>
+	, typename = std::enable_if_t<std::is_same<bool, std::result_of_t<BinaryPredicate(filter_T, T)> >::value>
+>
 auto funtor_filtered_fold(filter_T&& filter, T&& inV = T(), BinaryPredicate pred = std::less<>(), BinaryOperation op = std::plus<>())
 {
 	return funtor_filtered_fold_impl<filter_T, T, decltype(pred), decltype(op) >(
