@@ -334,7 +334,7 @@ R"qwe(1 2 4 6 7
 		));
 
 
-		auto res8 = std::for_each(i.begin(), i.end(), funtor_filtered_fold<nullptr_t>(10));
+		auto res8 = std::for_each(i.begin(), i.end(), funtor_filtered_fold(10, unary_filter_test()));
 
 		assert(res0.val == 43 + 35 + 67);
 		assert(res1.val == 43 + 35 + 67 - 10);

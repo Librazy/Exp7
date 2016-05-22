@@ -208,6 +208,12 @@ struct filter_test
 	}
 };
 
+struct unary_filter_test
+{
+	bool operator()(const int i) const { return i > 10; }
+};
+
+
 struct val_test
 {
 	int i;
@@ -279,24 +285,17 @@ struct funtor_filtered_fold_impl<filter_T, T, UnaryPredicate, BinaryOperation
 
 
 
-template<typename N
+template<typename N = nullptr_t
 	, typename T
-	, typename UnaryPredicate = decltype(std::bind(
-		std::greater<>()
-		,std::placeholders::_1
-		,0
-		))
+	, typename UnaryPredicate 
 	, typename BinaryOperation = std::plus<>
 	, typename = std::enable_if_t<std::is_same<bool, std::result_of_t<UnaryPredicate(T)> >::value>
-	, typename = std::enable_if_t<std::is_same<std::nullptr_t, N>::value >
 >
 auto funtor_filtered_fold(T&& inV
-	, UnaryPredicate pred = std::bind(
-		std::greater<>()
-		,std::placeholders::_1
-		,0
-		)
-	, BinaryOperation op = std::plus<>() )
+	, UnaryPredicate pred
+	, BinaryOperation op = std::plus<>()
+	, N = nullptr
+	)
 {
 	return funtor_filtered_fold_impl<nullptr_t, T, decltype(pred), decltype(op)>(
 		std::forward<T>(inV),
