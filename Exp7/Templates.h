@@ -240,13 +240,7 @@ template<typename filter_T,typename T ,typename BinaryPredicate , typename Binar
 	,typename = void
 	,typename = void
 	>
-struct funtor_filtered_fold_impl
-{
-
-	void operator()(T& a){
-
-	}
-};
+struct funtor_filtered_fold_impl{};
 
 template<typename filter_T, typename T, typename BinaryPredicate, typename BinaryOperation>
 struct funtor_filtered_fold_impl<filter_T, T, BinaryPredicate, BinaryOperation
