@@ -196,27 +196,58 @@ void template_quick_sort(typename std::vector<T>::iterator it1, typename std::ve
 	}
 }
 
+
+struct filter_test
+{
+	filter_test(){}
+	filter_test(const filter_test&) = delete;
+	filter_test operator=(const filter_test&) = delete;
+	bool operator<(const int i) const
+	{
+		return i < 10;
+	}
+};
+
+struct val_test
+{
+	int i;
+	val_test(int i):i(i) {}
+	val_test(const val_test&) = delete;
+	val_test(val_test&& a) {
+		i = a.i;
+		a.i = -10000000;
+	};
+	val_test operator=(const val_test&) = delete;
+	void operator=(val_test&& a) {
+		i = a.i;
+		a.i = -10000000;
+	};
+	val_test&& operator+(const val_test& a) const
+	{
+		return val_test(i+a.i);
+	}
+};
+
 template<typename filter_T,typename T ,typename BinaryPredicate , typename BinaryOperation
 	,typename = std::enable_if_t<std::is_same<bool,std::result_of_t<BinaryPredicate(filter_T,T)> >::value>
 	>
 struct funtor_filtered_fold_impl
 {
-	T val;
-	filter_T filter;
+	T& val;
+	filter_T& filter;
 	BinaryPredicate pred;
 	BinaryOperation op;
-	funtor_filtered_fold_impl(filter_T filter ,T&& inV = T(), BinaryPredicate pred = std::less<T>(), BinaryOperation op = std::plus<T>()) :
+	funtor_filtered_fold_impl(filter_T&& filter, T&& inV, BinaryPredicate pred, BinaryOperation op) :
 		val(inV), filter(filter),pred(pred),op(op) {}
-	T operator()(T& a){
+	void operator()(T& a){
 		if(std::invoke(pred,filter,a)) {
 			val = std::invoke(op, val, a);
 		}
-		return val;
 	}
 };
 
-template<typename filter_T, typename T = filter_T, typename BinaryPredicate = std::less<T>, typename BinaryOperation = std::plus<T>>
-auto funtor_filtered_fold(filter_T filter, T&& inV = T(), BinaryPredicate pred = std::less<T>(), BinaryOperation op = std::plus<T>())
+template<typename filter_T, typename T = filter_T, typename BinaryPredicate = std::less<>, typename BinaryOperation = std::plus<>>
+auto funtor_filtered_fold(filter_T&& filter, T&& inV = T(), BinaryPredicate pred = std::less<>(), BinaryOperation op = std::plus<>())
 {
 	return funtor_filtered_fold_impl<filter_T, T, decltype(pred), decltype(op) >(
 		std::forward<filter_T>(filter),

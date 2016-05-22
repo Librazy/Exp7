@@ -306,22 +306,40 @@ R"qwe(1 2 4 6 7
 	//++Start filtered_sum
 	{
 		std::vector<int> i{ 1,4,7,9,10,43,35,67 };
+		val_test js[]={ 1,4,7,9,10,43,35,67 };
+		std::vector<val_test> j{ 
+			std::make_move_iterator(std::begin(j)),
+			std::make_move_iterator(std::end(j)) 
+		};
+
 		auto res0 = std::for_each(i.begin(), i.end(), funtor_filtered_fold(10));
 		auto res1 = std::for_each(i.begin(), i.end(), funtor_filtered_fold(10, -10));
 		auto res2 = std::for_each(i.begin(), i.end(), funtor_filtered_fold(10, 0
-			, std::equal_to<int>()));
+			, std::equal_to<int>())
+		);
 		auto res3 = std::for_each(i.begin(), i.end(), funtor_filtered_fold(10, 0
 			, std::equal_to<int>()
-			, std::minus<int>()));
+			, std::minus<int>())
+		);
 		auto res4 = std::for_each(i.begin(), i.end(), funtor_filtered_fold(10, 0
 			, [](auto a, auto b) {return a <= b; }
-			, std::minus<int>()));
+			, std::minus<int>())
+		);
+		auto res5 = std::for_each(i.begin(), i.end(), funtor_filtered_fold(filter_test(), 0));
+		auto res6 = std::for_each(j.begin(), j.end(), funtor_filtered_fold(val_test(10),val_test(0)
+			, [](val_test& a, val_test& b) {return a.i < b.i; }
+		));
+		auto res7 = std::for_each(j.begin(), j.end(), funtor_filtered_fold(filter_test(), val_test(0)
+			, [](filter_test& a, val_test& b) {return 10 < b.i; }
+		));
 
 		assert(res0.val == 43 + 35 + 67);
 		assert(res1.val == 43 + 35 + 67 - 10);
 		assert(res2.val == 10);
 		assert(res3.val == -10);
 		assert(res4.val == -(43 + 35 + 67 + 10));
+		assert(res5.val == 1 + 4 + 7 + 9);
+		assert(res6.val.i == 43 + 35 + 67);
 
 	}
 	//++End filtered_sum
