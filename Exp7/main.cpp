@@ -389,5 +389,12 @@ R"qwe(1 2 4 6 7
 		assert(res == "NycunOrg");
 	}
 	//++End Rot13
+
+
+	{
+		int a=0, b=0;
+		bool c=0, d=0;
+		SFINAE_test(c,a);
+	}
 	return 0;
 }

@@ -238,14 +238,12 @@ struct val_test
 
 template<typename filter_T,typename T ,typename BinaryPredicate , typename BinaryOperation
 	,typename = void
-	,typename = void
 	>
 struct funtor_filtered_fold_impl{};
 
 template<typename filter_T, typename T, typename BinaryPredicate, typename BinaryOperation>
 struct funtor_filtered_fold_impl<filter_T, T, BinaryPredicate, BinaryOperation
 	, std::enable_if_t<std::is_same<bool, std::result_of_t<BinaryPredicate(filter_T, T)> >::value>
-	, void
 >
 {
 	T& val;
@@ -264,7 +262,6 @@ struct funtor_filtered_fold_impl<filter_T, T, BinaryPredicate, BinaryOperation
 template<typename filter_T, typename T, typename UnaryPredicate, typename BinaryOperation>
 struct funtor_filtered_fold_impl<filter_T, T, UnaryPredicate, BinaryOperation
 	, std::enable_if_t<std::is_same<bool, std::result_of_t<UnaryPredicate(T)> >::value>
-	, std::enable_if_t<std::is_same<std::nullptr_t, filter_T>::value >
 >
 {
 	T& val;
@@ -281,8 +278,7 @@ struct funtor_filtered_fold_impl<filter_T, T, UnaryPredicate, BinaryOperation
 
 
 
-template<typename N = nullptr_t
-	, typename T
+template< typename T
 	, typename UnaryPredicate 
 	, typename BinaryOperation = std::plus<>
 	, typename = std::enable_if_t<std::is_same<bool, std::result_of_t<UnaryPredicate(T)> >::value>
@@ -290,10 +286,9 @@ template<typename N = nullptr_t
 auto funtor_filtered_fold(T&& inV
 	, UnaryPredicate pred
 	, BinaryOperation op = std::plus<>()
-	, N = nullptr
 	)
 {
-	return funtor_filtered_fold_impl<nullptr_t, T, decltype(pred), decltype(op)>(
+	return funtor_filtered_fold_impl<void, T, decltype(pred), decltype(op)>(
 		std::forward<T>(inV),
 		std::forward<UnaryPredicate>(pred),
 		std::forward<BinaryOperation>(op)
