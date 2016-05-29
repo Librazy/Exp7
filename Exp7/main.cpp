@@ -252,8 +252,8 @@ R"qwe(1 2 4 6 7
 		std::vector<double> j{ 0,1,2,4,3,6,5,9,8,7 };
 		std::vector<int> sorted_i { 0,1,2,3,4,5,6,7,8,9 };
 		std::vector<double> sorted_d { 0,1,2,3,4,5,6,7,8,9 };
-		template_quick_sort<int>(i.begin(),i.end());
-		template_quick_sort<double>(j.begin(), j.end());
+		template_quick_sort(i.begin(),i.end());
+		template_quick_sort(j.begin(), j.end());
 		assert(i == sorted_i);
 		assert(j == sorted_d);
 	}
@@ -336,15 +336,15 @@ R"qwe(1 2 4 6 7
 
 		auto res8 = std::for_each(i.begin(), i.end(), funtor_filtered_fold(10, unary_predicate_test(10)));
 
-		assert(res0.val == 43 + 35 + 67);
-		assert(res1.val == 43 + 35 + 67 - 10);
-		assert(res2.val == 10);
-		assert(res3.val == -10);
-		assert(res4.val == -(43 + 35 + 67 + 10));
-		assert(res5.val == 1 + 4 + 7 + 9);
+		assert(res0.val   == 43 + 35 + 67);
+		assert(res1.val   == 43 + 35 + 67 - 10);
+		assert(res2.val   == 10);
+		assert(res3.val   == -10);
+		assert(res4.val   == -(43 + 35 + 67 + 10));
+		assert(res5.val   == 1 + 4 + 7 + 9);
 		assert(res6.val.i == 43 + 35 + 67);
 		assert(res7.val.i == 43 + 35 + 67);
-		assert(res8.val == 10 + 43 + 35 + 67 );
+		assert(res8.val   == 10 + 43 + 35 + 67 );
 
 	}
 	//++End filtered_sum
@@ -389,12 +389,5 @@ R"qwe(1 2 4 6 7
 		assert(res == "NycunOrg");
 	}
 	//++End Rot13
-
-
-	{
-		int a=0, b=0;
-		bool c=0, d=0;
-		SFINAE_test(c,a);
-	}
 	return 0;
 }

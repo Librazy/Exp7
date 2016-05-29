@@ -182,17 +182,18 @@ public:
 		cur->next = cur->next->next;
 	}
 };
-template<typename T>
-void template_quick_sort(typename std::vector<T>::iterator it1, typename std::vector<T>::iterator it2)
+
+template <class ForwardIt>
+void template_quick_sort(ForwardIt it1, ForwardIt it2)
 {
 	if (it2 - it1 <= 1)return;
 	if (it2 - it1 > 1)
 	{
 		auto its = it2 - 1;
-		auto it = partition(it1, its, [its](int a) {return (a < *its); });
+		auto it = partition(it1, its, [its](auto a) {return (a < *its); });
 		std::swap(*it, *its);
-		template_quick_sort<T>(it1, it);
-		template_quick_sort<T>(it + 1, it2);
+		template_quick_sort(it1, it);
+		template_quick_sort(it + 1, it2);
 	}
 }
 
