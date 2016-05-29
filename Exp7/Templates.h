@@ -260,8 +260,8 @@ struct funtor_filtered_fold_impl<filter_T, T, BinaryPredicate, BinaryOperation
 	}
 };
 
-template<typename filter_T, typename T, typename UnaryPredicate, typename BinaryOperation>
-struct funtor_filtered_fold_impl<filter_T, T, UnaryPredicate, BinaryOperation
+template<typename Void, typename T, typename UnaryPredicate, typename BinaryOperation>
+struct funtor_filtered_fold_impl<Void, T, UnaryPredicate, BinaryOperation
 	, std::enable_if_t<std::is_same<bool, std::result_of_t<UnaryPredicate(T)> >::value>
 >
 {
@@ -276,8 +276,6 @@ struct funtor_filtered_fold_impl<filter_T, T, UnaryPredicate, BinaryOperation
 		}
 	}
 };
-
-
 
 template< typename T
 	, typename UnaryPredicate 
@@ -295,8 +293,6 @@ auto funtor_filtered_fold(T&& inV
 		std::forward<BinaryOperation>(op)
 		);
 }
-
-
 
 template<typename filter_T
 	, typename T = filter_T
