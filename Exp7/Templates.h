@@ -1,6 +1,5 @@
 #pragma once
 #include <type_traits>
-
 template<typename T>
 void template_select_sort(T arr[], size_t num)
 {
