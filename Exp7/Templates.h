@@ -26,7 +26,7 @@ private:
     size_t b,e,cap;
 };
 template<typename T>
-template_queue<T>::template_queue() :b(0), e(0)
+template_queue<T>::template_queue() : b(0), e(0)
 {
     cap = 4;
     arr = new T[cap];
