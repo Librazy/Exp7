@@ -54,7 +54,7 @@ void template_queue<T>::push(T a)
 template<typename T>
 T template_min(T a, T b)
 {
-    return (a < b) ? a : b;
+    return (std::less<>()(a , b)) ? a : b;
 }
 template<typename T>
 class template_Array
