@@ -62,7 +62,7 @@ class template_Array
     T* data;
     size_t size;
 public:
-    template_Array(size_t size):data(new T[size]), size(size)
+    template_Array(size_t size) : data(new T[size]), size(size)
     {
         assert(size > 0);
     }
