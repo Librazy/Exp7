@@ -15,6 +15,7 @@ void template_select_sort(T arr[], size_t num)
         std::swap(arr[i], arr[cur]);
     }
 }
+
 template<typename T>
 class template_queue
 {
@@ -26,12 +27,14 @@ private:
     T* arr;
     size_t b,e,cap;
 };
+
 template<typename T>
 template_queue<T>::template_queue() : b(0), e(0)
 {
     cap = 4;
     arr = new T[cap];
 }
+
 template<typename T>
 T template_queue<T>::pop()
 {
