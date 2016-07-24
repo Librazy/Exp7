@@ -41,6 +41,7 @@ T template_queue<T>::pop()
     assert(e - b > 0);
     return arr[b++];
 }
+
 template<typename T>
 void template_queue<T>::push(T a)
 {
@@ -55,11 +56,13 @@ void template_queue<T>::push(T a)
     }
     arr[e++] = a;
 }
+
 template<typename T>
 T template_min(T a, T b)
 {
     return (std::less<>()(a , b)) ? a : b;
 }
+
 template<typename T>
 class template_Array
 {
@@ -95,6 +98,7 @@ public:
         return res;
     }
 };
+
 template<typename T>
 class template_Sorted_LinkedList
 {
