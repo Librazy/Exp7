@@ -224,7 +224,6 @@ struct unary_predicate_test
     bool operator()(const int i) const { return i > val; }
 };
 
-
 struct val_test
 {
     int i;
