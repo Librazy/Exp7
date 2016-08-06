@@ -205,7 +205,6 @@ void template_quick_sort(ForwardIt it1, ForwardIt it2)
     }
 }
 
-
 struct filter_test
 {
     filter_test(){}
