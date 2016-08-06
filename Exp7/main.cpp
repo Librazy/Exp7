@@ -1,5 +1,4 @@
 #include <memory>
-#include <iostream>
 #include "Singleton.h"
 #include "Date.h"
 #include "IntSet.h"
@@ -8,7 +7,6 @@
 #include "Time.h"
 #include "String.h"
 #include <cassert>
-#include <string>
 #include <sstream>
 
 #include "DateWithTime.h"
@@ -162,6 +160,7 @@ R"qwe(1 2 4 6 7
 		Point x(1,2);
 		Circle c(1, 2, 3);
 		Rectangle r(2, 3, 3, 5, 0);
+		assert(x.distance(x) == 0 && "Point test failed");
 		assert(c.area() == 3 * 3 * M_PI && "Point test failed");
 		assert(r.area() == 3 * 5 && "Point test failed");
 	}
@@ -278,7 +277,7 @@ R"qwe(1 2 4 6 7
 		std::stringstream ss1(s1);
 		std::stringstream ss2;
 	
-		for (Student i; ss1 >> i; students.push_back(i));
+		for (Student i; ss1 >> i; students.push_back(i)){}
 		std::sort(students.begin(), students.end(), [](auto a, auto b) {return !(a < b); });
 		for(Student& i:students) {
 			ss2<< i << std::endl;
